@@ -126,6 +126,7 @@
       function update() {
         if (gameState == 0) {
           if(music.isPlaying == false){
+             music = this.sound.add("bgm");
              music.play();
           }
           bg001.tilePositionX += 4.0;
