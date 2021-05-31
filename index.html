@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
+  </head>
+  <body>
+    <script>
+      class sakanaEnemy extends Phaser.GameObjects.Sprite {
+        constructor(scene, x, y) {
+          super(scene, x, y);
+          this.setTexture("enemy");
+          this.setPosition(x, y);
+        }
+        preUpdate(time, delta) {
+          super.preUpdate(time, delta);
+          var centerX = this.x + 32;
+          var centerY = this.y + 16;
+          if (myChara.x <= centerX && myChara.x + 128 >= centerX) {
+            if (myChara.y <= centerY && myChara.y + 64 >= centerY) {
+              gameState = 1;
+              se_boom.play();
+            }
+          }
+          this.x = this.x - 2;
+          if (this.x < 10) {
+            this.destroy();
+          }
+          if (gameState != 0) {
+            this.destroy();
+          }
+        }
+      }
+
+      class ebiItem extends Phaser.GameObjects.Sprite {
+        constructor(scene, x, y) {
+          super(scene, x, y);
+          this.setTexture("item");
+          this.setPosition(x, y);
+        }
+        preUpdate(time, delta) {
+          super.preUpdate(time, delta);
+          var centerX = this.x + 32;
+          var centerY = this.y + 16;
+          if (myChara.x <= centerX && myChara.x + 128 >= centerX) {
+            if (myChara.y <= centerY && myChara.y + 64 >= centerY) {
+              score = score - 1;
+              txtScore.text = "EVO:" + score;
+              if (score <= 0) {
+                gameState = 2; //Game Clear
+              }
+              se_eat.play();
+              this.destroy();
+            }
+          }
+          this.x = this.x - 4;
+          if (this.x < 10) {
+            this.destroy();
+          }
+          if (gameState != 0) {
+            this.destroy();
+          }
+        }
+      }
+
+      var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        backgroundColor: "#4488aa",
+        audio: {
+          disableWebAudio: true
+        },
+        scene: {
+          preload: preload,
+          create: create,
+          update: update
+        }
+      };
+      var game = new Phaser.Game(config);
+      var bg001;
+      var txtScore;
+      var txtEvt;
+      var myChara;
+      var input;
+      var music;
+      var se_boom;
+      var se_eat;
+      var score = 5;
+      var cntTimer = 0;
+      var gameState = -1; //-1:preStart ,0:Starting, 1:Game Over, 2= Game Clear
+      function preload() {
+        this.load.image("bg001", "./bg.jpg");
+        this.load.image("bg002", "./sea2_background.png");
+        this.load.image("sakana", "./mychara.png");
+        this.load.image("enemy", "./enemy.png");
+        this.load.image("item", "./item.png");
+        this.load.audio("bgm", "bgm001.mp3");
+        this.load.audio("bgm_gameover", "bgm_gameover001.mp3");
+        this.load.audio("bgm_gameclear", "bgm_gameclear001.mp3");
+        this.load.audio("se_boom", "boom.mp3");
+        this.load.audio("se_eat", "se_eat.mp3");
+      }
+      function create() {
+        bg001 = this.add.tileSprite(400, 300, 800, 600, "bg001");
+        txtScore = this.add.text(250, 16, "EVO:" + score, { fill: "#ffffff" });
+        txtScore.setStroke("#ff0000", 2);
+        txtScore.setFontSize("32px");
+
+        se_boom = this.sound.add("se_boom");
+        se_eat = this.sound.add("se_eat");
+
+        music = this.sound.add("bgm");
+
+        //cake = this.add.sprite(200, 200, "cake");
+        myChara = this.add.sprite(100, 100, "sakana");
+
+        bg002 = this.add.tileSprite(400, 300, 800, 600, "bg002");
+
+        txtEvt = this.add.text(400, 300, "", { fill: "#ffffff" });
+        txtEvt.setFontSize("64px");
+
+        input = this.input;
+      }
+      function update() {
+        if (gameState == -1) {
+          music.play();
+          gameState = 0;
+        }
+        if (gameState == 0) {
+          bg001.tilePositionX += 4.0;
+          bg002.tilePositionX += 0.5;
+          cntTimer = cntTimer + 1;
+          if (cntTimer > 60) {
+            cntTimer = 0;
+
+            var y = Math.floor(Math.random() * 550);
+            this.add.existing(new sakanaEnemy(this, 800, y));
+
+            var isPop = Math.floor(Math.random() * 100);
+            if (isPop > 60) {
+              var itemY = Math.floor(Math.random() * 550);
+              this.add.existing(new ebiItem(this, 800, y));
+            }
+          }
+          myChara.x = input.x;
+          myChara.y = input.y;
+        } else if (gameState == 1) {
+          txtEvt.setStroke("#ff0000", 2);
+          txtEvt.text = "Game Over";
+          music.stop();
+          music = this.sound.add("bgm_gameover");
+          music.play();
+          myChara.visible = false;
+          gameState = 99;
+        } else if (gameState == 2) {
+          txtEvt.setStroke("#0000ff", 2);
+          txtEvt.text = "Game Clear";
+          music.stop();
+          music = this.sound.add("bgm_gameclear");
+          music.play();
+          gameState = 99;
+        }
+      }
+    </script>
+  </body>
+</html>
