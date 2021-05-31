@@ -88,7 +88,7 @@
       var se_eat;
       var score = 5;
       var cntTimer = 0;
-      var gameState = -1; //-1:preStart ,0:Starting, 1:Game Over, 2= Game Clear
+      var gameState = 0; //0:Starting, 1:Game Over, 2= Game Clear
       function preload() {
         this.load.image("bg001", "./bg.jpg");
         this.load.image("bg002", "./sea2_background.png");
@@ -124,11 +124,10 @@
         input = this.input;
       }
       function update() {
-        if (gameState == -1) {
-          music.play();
-          gameState = 0;
-        }
         if (gameState == 0) {
+          if(music.isPlaying == false){
+             music.play();
+          }
           bg001.tilePositionX += 4.0;
           bg002.tilePositionX += 0.5;
           cntTimer = cntTimer + 1;
