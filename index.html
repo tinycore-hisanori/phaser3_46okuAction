@@ -125,16 +125,18 @@
       }
       function update() {
         if (gameState == 0) {
-          console.log("playing=" + music.isPlaying);
-          if(music.isPlaying == false){
-            console.log("DETECT");
-             music.play();
-          }
+         
           bg001.tilePositionX += 4.0;
           bg002.tilePositionX += 0.5;
           cntTimer = cntTimer + 1;
           if (cntTimer > 60) {
             cntTimer = 0;
+
+            console.log("playing=" + music.isPlaying);
+            if(music.isPlaying == false){
+              console.log("DETECT");
+              music.play();
+            }
 
             var y = Math.floor(Math.random() * 550);
             this.add.existing(new sakanaEnemy(this, 800, y));
