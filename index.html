@@ -110,7 +110,7 @@
         se_boom = this.sound.add("se_boom");
         se_eat = this.sound.add("se_eat");
 
-        music = this.sound.add("bgm");
+        music = this.sound.add("bgm", 1, true);
  		    music.stop();
  
         //cake = this.add.sprite(200, 200, "cake");
@@ -127,7 +127,7 @@
         if (gameState == 0) {
           console.log("playing=" + music.isPlaying);
           if(music.isPlaying == false){
-             music = this.sound.add("bgm");
+            console.log("DETECT");
              music.play();
           }
           bg001.tilePositionX += 4.0;
