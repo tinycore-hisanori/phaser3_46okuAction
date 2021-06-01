@@ -1,6 +1,7 @@
 # phaser3.jsサンプルゲーム Vol.1「46億年物語風HTML5ゲームゲーム」
  
 Phaser3.jsを使ってHTML5のゲームを作るときに参考にしてもらうためのサンプルゲームです。
+
 マウスで自キャラを動かして、敵をかわしつつレベルをあげていくアクションゲームです。
 
 （昔SFCで流行った４６億年物語の海ステージのようなゲームです）
@@ -8,6 +9,7 @@ Phaser3.jsを使ってHTML5のゲームを作るときに参考にしてもら�
 # DEMO
  
 以下のアドレスでプレイすることができます。
+
 [４６億年物語風HTML5ゲーム](https://tinycore-hisanori.github.io/phaser3_46okuAction/)
 
  
@@ -22,7 +24,7 @@ Phaser3.jsを使ってHTML5のゲームを作るときに参考にしてもら�
 
 # Requirement
  
-* Phase3.js(CDN経由) 
+* Phase3.js - 3.15.1(CDN経由) 
  
 # Note
  
