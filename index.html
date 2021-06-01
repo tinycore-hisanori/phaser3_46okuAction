@@ -121,21 +121,23 @@
         txtEvt.setStroke("#0000ff", 4);
         txtEvt.setFontSize("60px");
 
+        txtScore.visible = false;
+        myChara.visible = false;
+
         clickButton = this.add.text(200, 300, "START TO CLICK", {
           fill: "#0f0"
         });
-        txtEvt.text = "";
         clickButton.setStroke("#0000ff", 4);
         clickButton.setFontSize("40px");
         clickButton.setInteractive();
         clickButton.on("pointerdown", () => {
-          console.log("pointerover");
+          txtEvt.text = "";
           txtScore.visible = true;
           myChara.visible = true;
           gameState = 0;
           clickButton.destroy();
         });
-        
+
         input = this.input;
 
 
@@ -148,13 +150,9 @@
           cntTimer = cntTimer + 1;
           if (cntTimer > 60) {
             cntTimer = 0;
-
-            console.log("playing=" + music.isPlaying);
             if(music.isPlaying == false){
-              console.log("DETECT");
               music.play();
             }
-
             var y = Math.floor(Math.random() * 550);
             this.add.existing(new sakanaEnemy(this, 800, y));
 
@@ -181,7 +179,6 @@
           music = this.sound.add("bgm_gameclear");
           music.play();
           gameState = 99;
-        }else if (gameState == -1) {
         }
       }
     </script>
