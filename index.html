@@ -125,6 +125,7 @@
       }
       function update() {
         if (gameState == 0) {
+          console.log("playing=" + music.isPlaying);
           if(music.isPlaying == false){
              music = this.sound.add("bgm");
              music.play();
