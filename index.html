@@ -85,7 +85,7 @@
       var se_eat;
       var score = 5;
       var cntTimer = 0;
-      var gameState = 0; //0:Starting, 1:Game Over, 2= Game Clear
+      var gameState = -1; //-1:Title, 0:Starting, 1:Game Over, 2= Game Clear
       function preload() {
         this.load.image("bg001", "./bg.jpg");
         this.load.image("bg002", "./sea2_background.png");
@@ -115,10 +115,30 @@
 
         bg002 = this.add.tileSprite(400, 300, 800, 600, "bg002");
 
-        txtEvt = this.add.text(400, 300, "", { fill: "#ffffff" });
-        txtEvt.setFontSize("64px");
+        txtEvt = this.add.text(120, 200, "Evolution Game", {
+          fill: "#ffffff"
+        });
+        txtEvt.setStroke("#0000ff", 4);
+        txtEvt.setFontSize("60px");
 
+        clickButton = this.add.text(200, 300, "START TO CLICK", {
+          fill: "#0f0"
+        });
+        txtEvt.text = "";
+        clickButton.setStroke("#0000ff", 4);
+        clickButton.setFontSize("40px");
+        clickButton.setInteractive();
+        clickButton.on("pointerdown", () => {
+          console.log("pointerover");
+          txtScore.visible = true;
+          myChara.visible = true;
+          gameState = 0;
+          clickButton.destroy();
+        });
+        
         input = this.input;
+
+
       }
       function update() {
         if (gameState == 0) {
@@ -161,6 +181,7 @@
           music = this.sound.add("bgm_gameclear");
           music.play();
           gameState = 99;
+        }else if (gameState == -1) {
         }
       }
     </script>
