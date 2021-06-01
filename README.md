@@ -25,7 +25,7 @@ Phaser3.jsを使ってHTML5のゲームを作るときに参考にしてもら�
 
 # Requirement
  
-* Phase3.js - 3.15.1(CDN経由) 
+* Phase3.js - 3.55.2
  
 # Note
  
